@@ -72,6 +72,11 @@ pub trait Engine: Sized + 'static + Clone {
     /// Invoke the pairing function `G1 x G2 -> Gt` without the use of precomputation and
     /// other optimizations.
     fn pairing(p: &Self::G1Affine, q: &Self::G2Affine) -> Self::Gt;
+
+    /// Performs a complete pairing operation `(p, q)` on Projective elements
+    fn pairing_p(p: &Self::G1, q: &Self::G2) -> Self::Gt {
+        Self::pairing(&Self::G1Affine::from(*p), &Self::G2Affine::from(*q))
+    }
 }
 
 /// Affine representation of an elliptic curve point that can be used
